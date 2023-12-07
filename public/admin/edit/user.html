@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../style.css">
+    <link rel="icon" type="image/png" href="../../../images/user.svg">
+    <title>Document</title>
+</head>
+
+<style>
+    form {
+        display: flex;
+        gap: 1rem;
+        font-size: 20px;
+    }
+
+    form input {
+        font-size: 20px;
+    }
+
+    form select {
+        font-size: 20px;
+    }
+
+    form input[name="id"] {
+        opacity: 0.6;
+    }
+
+    label {
+        text-align: start;
+    }
+
+    h3 {
+        font-size: 30px;
+        margin-top: 2rem;
+    }
+</style>
+
+<body>
+    <h1>Rediger bruker</h1>
+    <form action="/post/redigerBruker" method="POST">
+        <label>ID</label>
+        <input type="number" name="id" id="id" placeholder="ID" readonly />
+        <label>Fult navn</label>
+        <input type="text" name="name" id="name" placeholder="Fullt navn" />
+        <label>Email</label>
+        <input type="email" name="email" id="email" placeholder="Email" />
+        <label>Velg rolle</label>
+        <select name="rolle" id="rolle">
+            <option selected value="velg">Velg en rolle...</option>
+            <option value="admin">Admin</option>
+            <option value="leder">Leder</option>
+            <option value="medlem">Medlem</option>
+            </select>
+        <h3>Kontaktinfo</h3>
+
+        <label>Telefon</label>
+        <input type="tel" name="phone" id="phone" placeholder="Telefon" />
+
+        <label>Adresse</label>
+        <input type="text" name="adress" id="adress" placeholder="Adresse" />
+
+        <label>Fødselsdato</label>
+        <input type="date" name="birthdate" id="birthdate" placeholder="Fødselsdato" />
+
+        <h3>velg pletong</h3>
+        <select name="peletong_id" id="peletong" >
+            <option value="">Choose peletong</option>
+        </select>
+        <input type="submit">
+    </form>
+</body>
+
+</html>
+
+<script defer>
+    const userId = window.location.pathname.split("/").pop();
+    fetch("/json/users")
+        .then((res) => res.json())
+        .then((data) => {
+            const user = data.find((user) => user.id == userId);
+            document.getElementById("id").value = user.id;
+            document.getElementById("name").value = user.name;
+            document.getElementById("email").value = user.email;
+            document.getElementById("rolle").value = user.rolle;
+        });
+
+        async function fetchPeletong(){
+            try{
+                const response = await fetch('/json/peletong')
+                const peletonger = await response.json()
+    
+                const peletongierDrop = document.getElementById("peletong");
+    
+                peletonger.forEach(peletong =>{
+                    const option = document.createElement("option")
+                    option.value = peletong.id;
+                    option.name = peletong.id;
+                    option.textContent = peletong.name
+                    peletongierDrop.appendChild(option)
+                })
+            }catch (error){
+                console.log(`Error fetching peletong ${error}`)
+            }
+        }   
+        fetchPeletong()
+</script>

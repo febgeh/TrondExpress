@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+body,
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #333;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Style for forms */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+/* Custom styling for input */
+input {
+  padding: 1rem;
+  width: 500px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  background-color: #f2f2f2;
+}
+
+input[type="submit"] {
+  background-color: #4caf50;
+  font-weight: 500;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Custom styling for title */
+h1 {
+  text-align: center;
+  font-size: 36px;
+  color: #fff;
+}
+
+h2 {
+  color: #fff;
+  margin: 1rem 0;
+}
+
+h3 {
+  color: #fff;
+  text-align: center;
+  margin: 1rem;
+}
+
+p {
+  color: #fff;
+}
+
+img {
+  color: #fff;
+  width: 100px;
+  margin-bottom: 20px;
+  object-fit: cover;
+
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  height: 85vh;
+  gap: 2rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+}
+
+header a button {
+  background-color: transparent;
+  border: .2px solid #ccc;
+  color: white;
+  padding: 2rem;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: auto;
+}
+a {
+  color: #fff;
+  font-size: 24px;
+}
+
+section {
+  height: 80vh;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+  margin: 2rem 0;
+  border-collapse: collapse;
+}
+
+#editBody {
+  display: flex;
+  padding: 0 2rem;
+  flex-direction: column;
+  justify-content: center;
+}
+
+table, th, td {
+  border: 1px solid white;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+
+.btn {
+  padding: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-warning {
+  background-color: transparent;
+  border: 1px solid #fff;
+}
+
+.btn-danger {
+  background-color: transparent;
+  border: 1px solid #fff;
+}
+
+select, option {
+  width: 500px;
+  height: 50px;
+  font-size: 16px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  color: #333;
+}
+
+option {
+  padding: 0.5rem 1rem;
+}
