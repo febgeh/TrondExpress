@@ -114,6 +114,8 @@
                 const actions = document.createElement("td");
                 const editUserA = document.createElement("a");
                 const editUser = document.createElement("button");
+                const editPeletongA = document.createElement("a");
+                const editPeletong = document.createElement("button");
                 const deleteForm = document.createElement("form");
                 const deleteUser = document.createElement("button");
                 id.setAttribute("class", "id");
@@ -123,6 +125,8 @@
                 rolle.innerText = user.rolle;
                 editUserA.href = `/admin/edit/user/${user.id}`;
                 editUser.innerText = "✏️";
+                editPeletongA.href = `/admin/edit/peletong/${user.id}`;
+                editPeletong.innerText = "✏️";
                 editUser.setAttribute("class", "btn btn-warning");
                 editUser.style.marginRight = "2.5%";
                 deleteForm.setAttribute("class", "form-class");
@@ -136,6 +140,8 @@
                 tr.appendChild(rolle);
                 editUserA.appendChild(editUser);
                 actions.appendChild(editUserA);
+                editPeletongA.appendChild(editPeletong);
+                actions.appendChild(editPeletongA);
                 deleteForm.appendChild(deleteUser);
                 actions.appendChild(deleteForm);
                 tr.appendChild(actions);

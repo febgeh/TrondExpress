@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../style.css">
+    <title>Document</title>
+</head>
+
+<style>
+    form {
+        display: flex;
+        gap: 1rem;
+        font-size: 20px;
+    }
+
+    form input {
+        font-size: 20px;
+    }
+
+    form select {
+        font-size: 20px;
+    }
+
+    form input[name="id"] {
+        opacity: 0.6;
+    }
+
+    label {
+        text-align: start;
+    }
+
+    h3 {
+        font-size: 30px;
+        margin-top: 2rem;
+    }
+</style>
+
+<body>
+    <h1>Rediger bruker</h1>
+    <form action="/post/redigerPeletong" method="POST">
+        <h3>velg pletong</h3>
+        <select name="peletong_id" id="peletong" >
+            <option value="">Choose peletong</option>
+        </select>
+        <input type="submit">
+    </form>
+</body>
+
+</html>
+
+<script defer>
+    async function fetchPeletong(){
+        try{
+            const response = await fetch('/json/peletong')
+            const peletonger = await response.json()
+
+            const peletongierDrop = document.getElementById("peletong");
+
+            peletonger.forEach(peletong =>{
+                const option = document.createElement("option")
+                option.value = peletong.id;
+                option.name = peletong.id;
+                option.textContent = peletong.id
+                peletongierDrop.appendChild(option)
+            })
+        }catch (error){
+            console.log(`Error fetching peletong ${error}`)
+        }
+    }   
+    fetchPeletong()
+</script>

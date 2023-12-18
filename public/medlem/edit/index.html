@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../style.css">
+    <link rel="icon" type="image/png" href="../../../images/user.svg">
+    <title>Document</title>
+</head>
+
+<style>
+    form {
+        display: flex;
+        gap: 1rem;
+        font-size: 20px;
+    }
+
+    form input {
+        font-size: 20px;
+    }
+
+    form select {
+        font-size: 20px;
+    }
+
+    form input[name="id"] {
+        opacity: 0.6;
+    }
+
+    label {
+        text-align: start;
+    }
+
+    h3 {
+        font-size: 30px;
+        margin-top: 2rem;
+    }
+</style>
+
+<body>
+    <h1>Rediger bruker</h1>
+    <form action="/post/redigerBrukerM" method="POST">
+
+        <label>Telefon</label>
+        <input type="tel" name="phone" id="phone" placeholder="Telefon" />
+
+        <label>Adresse</label>
+        <input type="text" name="adress" id="adress" placeholder="Adresse" />
+
+        <label>Fødselsdato</label>
+        <input type="date" name="birthdate" id="birthdate" placeholder="Fødselsdato" />
+        <input value="Submit" type="submit">
+    </form>
+</body>
+
+</html>
+
+<script defer>
+   
+</script>

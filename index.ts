@@ -157,7 +157,30 @@ app.post("/post/redigerBruker", (req, res) => {
   res.redirect("/admin/edit");
 });
 
-app.use((req, res, next) => {
+app.post("/post/slettBruker/:id", (req, res) => {
+  const id = req.params.id;
+  const deleteStatement = db.prepare("DELETE FROM user WHERE id = ?");
+  deleteStatement.run(id);
+  res.redirect("/admin/edit");
+});
+
+app.post("/post/redigerPeletong:id", (req, res) => {
+  const { peletong_id } = req.body;
+
+  const id = req.params.id;
+  const user = findUserByIdStmt.get(id) as UserTest
+
+
+  if(peletong_id != user.peletong_id){
+    const updateStmt = db.prepare("UPDATE user SET peletong_id = ? WHERE id = ?");
+    updateStmt.run(peletong_id, id);
+  }
+  res.redirect("/admin/edit");
+});
+
+
+
+/* app.use((req, res, next) => {
   const token = req.cookies.token 
 
 
@@ -172,23 +195,45 @@ app.use((req, res, next) => {
   } else {
     res.redirect("/");
   }
-}, express.static("admin")); 
+
+  next()
+}, express.static("admin"));  */
 
 app.post("/createPeletong", (req, res) => {
   const { name , kompani_id} = req.body;
+  const token = req.cookies.token 
+  const user = findUserByIdStmt.get(token) as UserTest
+
+
   const createStmt = db.prepare(`INSERT INTO peletong (name, kompani_id) VALUES (?, ?);`);
   createStmt.run(name, kompani_id);
   setTimeout(() => {
-    res.redirect("/admin/");
+    if (user.rolle === "admin") {
+      res.redirect("/admin/")
+    }else if (user.rolle === "leder") {
+      res.redirect("/leder/");
+    }else {
+    res.redirect("/medlem/")}
   }, 1000);
 });
 
 app.post("/createKompani", (req, res) => {
+  const token = req.cookies.token 
+  const user = findUserByIdStmt.get(token) as UserTest
+  
   const { name } = req.body;
   const createStmt = db.prepare(`INSERT INTO kompani (name) VALUES (?);`);
   createStmt.run(name);
   setTimeout(() => {
-    res.redirect("/admin/");
+    setTimeout(() => {
+      if (user.rolle === "admin") {
+        res.redirect("/admin/")
+      }else if (user.rolle === "leder") {
+        res.redirect("/leder/");
+      }else{
+        res.redirect("/medlem/")
+      }
+    }, 1000);
   }, 1000);
 });
 
@@ -204,16 +249,61 @@ app.get("/json/peletong", (req, res) => {
   res.json(peletonger)
 });
 
+app.get("/medlem-opplysninger", (req, res) => {
+  const token = req.cookies.token
+  const user = findUserByIdStmt.get(token) as UserTest
+
+  const stmt = db.prepare(`SELECT * FROM user WHERE id = ${user.id}`);
+  const peletonger = stmt.all()
+  res.json(peletonger)
+});
+
 app.get("/json/users", (req, res) => {
   const users = db.prepare("SELECT * FROM user").all();
   console.log("user", users)
   res.json(users)
 });
 
+// app.get("/json/usersM", (req, res) => {
+//   const token = req.cookies.token
+//   const user = findUserByIdStmt.get(token) as UserTest
+
+//   const stmt = db.prepare(`SELECT * FROM user WHERE id = ${user.id}`);
+//   const medlem = stmt.all()
+//   res.json(medlem)
+// });
+
+app.post("/post/redigerBrukerM", (req, res) => {
+  const { id, phone, adress, birthdate } = req.body;
+
+  const token = req.cookies.token
+  const user = findUserByIdStmt.get(token) as UserTest
+
+  if (phone != user.phone) {
+    const updateStmt = db.prepare("UPDATE user SET phone = ? WHERE id = ?");
+    updateStmt.run(phone, token);
+  }
+
+  if (birthdate != user.birthdate) {
+    const updateStmt = db.prepare("UPDATE user SET birthdate = ? WHERE id = ?");
+    updateStmt.run(birthdate, token);
+  }
+
+  if (adress != user.adress) {
+    const updateStmt = db.prepare("UPDATE user SET adress = ? WHERE id = ?");
+    updateStmt.run(adress, token);
+  }
+
+  res.redirect("/medlem/");
+});
+
+
 app.get("/admin/edit/user/:id", (req, res) => {
   res.sendFile(join(__dirname, "public/admin/edit/user.html"));
 });
-
+app.get("/admin/edit/peletong/:id", (req, res) => {
+  res.sendFile(join(__dirname, "public/admin/edit/peletong.html"));
+});
 app.listen(3000, () => {
     console.log(`Server running on port 3000`);
 });
